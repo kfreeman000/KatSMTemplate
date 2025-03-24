@@ -6,7 +6,7 @@ export default function Playground() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Try Changing the Code Below!</Text>
+      <Text style={styles.heading}>This code allows you to toggle with a number</Text>
       <Text style={styles.counter}>Count: {count}</Text>
 
       <Button title="Increase" onPress={() => setCount(count + 1)} />
