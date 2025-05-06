@@ -1,3 +1,11 @@
+// GUMBALLS SOURCE CODE 
+
+// color picker: https://reactnative.dev/docs/colors scroll down to "color keywords"
+
+// background choices:
+// https://media.istockphoto.com/id/153030612/vector/candy-bar.jpg?s=612x612&w=0&k=20&c=A4atEqRNuqBb3UnyATewI33xPoOBEeP4mdNtVEDgd3Y=
+// https://static.vecteezy.com/system/resources/thumbnails/053/966/180/small/cute-bakery-shop-with-candy-background-vector.jpg
+
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -6,6 +14,7 @@ import {
   TouchableOpacity,
   Alert,
   FlatList,
+  ImageBackground, 
 } from 'react-native';
 
 export default Activities = () => {
@@ -14,24 +23,24 @@ export default Activities = () => {
     {
       id: 1,
       title: 'Number Changer',
-      color: '#FF4500',
+      color: 'blue',
     },
     {
       id: 2,
       title: 'Color Changer',
-      color: '#008080',
     },
     {
       id: 3,
       title: 'Text Size Changer',
-      color: '#8A2BE2',
+      color: 'yellow',
     },
   ];
 
-  const [options, setOptions] = useState(activityList);
-  const [number, setNumber] = useState(0);
-  const [currentColor, setCurrentColor] = useState('#008080'); 
-  const [textSize, setTextSize] = useState(18);
+  // the useState function is how define what we first see when the app opens
+  const [options, setOptions] = useState(activityList);   
+  const [number, setNumber] = useState(0);                  // our number starts at 0
+  const [currentColor, setCurrentColor] = useState('red'); 
+  const [textSize, setTextSize] = useState(18);             // our text size starts at 18 
 
   const clickEventListener = (item) => {
     if (item.title === 'Number Changer') {
@@ -55,12 +64,12 @@ export default Activities = () => {
         ]
       );
     } else if (item.title === 'Color Changer') {
-      const colors = ['#FF69B4', '#ADD8E6', '#90EE90', '#FFA07A'];
+      const colors = ['salmon', 'crimson', 'teal', 'lime', 'navy', 'aqua', 'orange', 'pink', 'blueviolet', 'chocolate', 'coral', 'cornflowerblue', 'deeppink', 'lavender'];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
       setCurrentColor(randomColor);
       Alert.alert(
         'Color Changed',
-        `The color is now ${randomColor}`,
+        `The color is now ${randomColor}`,   // the Math library has a random function that randomly picks something from a list!
         [
           {
             text: 'OK',
@@ -93,43 +102,47 @@ export default Activities = () => {
         ]
       );
     } else {
-      Alert.alert(item.title);
+      Alert.alert(item.title);  // the alert library displays the pop up messages 
     }
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.list}
-        contentContainerStyle={styles.listContainer}
-        data={options}
-        horizontal={false}
-        numColumns={2}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[
-              styles.itemContainer,
-              {
-                backgroundColor: item.title === 'Color Changer' ? currentColor : item.color,
-              },
-            ]}
-            onPress={() => clickEventListener(item)}
-          >
-            <Text
+    <ImageBackground
+      source={{uri:'https://media.istockphoto.com/id/153030612/vector/candy-bar.jpg?s=612x612&w=0&k=20&c=A4atEqRNuqBb3UnyATewI33xPoOBEeP4mdNtVEDgd3Y='}}
+      style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.listContainer}
+          data={options}
+          horizontal={false}
+          numColumns={2}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
               style={[
-                styles.itemText,
+                styles.itemContainer,
                 {
-                  fontSize: item.title === 'Text Size Changer' ? textSize : 18,
+                  backgroundColor: item.title === 'Color Changer' ? currentColor : item.color,
                 },
               ]}
+              onPress={() => clickEventListener(item)}
             >
-              {item.title}
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
+              <Text
+                style={[
+                  styles.itemText,
+                  {
+                    fontSize: item.title === 'Text Size Changer' ? textSize : 18,
+                  },
+                ]}
+              >
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
     </View>
+   </ImageBackground> 
   );
 };
 
@@ -137,11 +150,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 40,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
   },
   list: {
     paddingHorizontal: 5,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
   },
   listContainer: {
     alignItems: 'center',
@@ -156,7 +169,11 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
-    color: 'pink',
+    color: 'black',           // change color of all gumballs text here
     fontWeight: 'bold',
   },
+  backgroundImage: {
+    flex: 1,                 
+    resizeMode: 'cover',     
+  }
 });
